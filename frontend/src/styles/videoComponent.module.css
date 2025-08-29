@@ -4,15 +4,21 @@
     background: rgb(1, 4, 48);
 }
 
+/* Your video preview (small in corner) */
 .meetUserVideo {
     position: absolute;
     bottom: 10vh;
-    height: 20vh;
+    height: 18vh;   /* slightly smaller so friend’s video looks bigger */
     width: auto;
-    left: 0;
-    border-radius: 20px;
+    left: 20px;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    object-fit: cover;
+    z-index: 10;
 }
 
+/* Control buttons */
 .buttonContainers {
     position: absolute;
     width: 100vw;
@@ -22,40 +28,103 @@
 
 .buttonContainers svg {
     font-size: 3rem;
+    cursor: pointer;
+    margin: 0 8px;
+    transition: transform 0.2s;
 }
 
-.conferenceView { 
+.buttonContainers svg:hover {
+    transform: scale(1.1);
+}
 
+/* Remote video(s) */
+.conferenceView { 
     display: flex;
-    
+    width: 69rem;
+    height: 42rem;
     padding: 10px;
     gap: 10px;
+    
 }
 
-.conferenceView  video {
-    width: 40vw;
-    height: 20vh;
-    min-width: 30vw;
-    border-radius: 10px;
+.conferenceView video {
+    width: 100%;     
+    height: 100%;   
+    border-radius: 12px;
+    object-fit: cover;
+    background: black;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.5);
 }
 
+/* Chat box */
 .chatRoom {
     position: absolute;
-    height: 90vh;
+    top: 0;
     right: 0;
-    background: white;
-    border-radius: 10px;
-    width: 30vw;
-    padding-inline: 20px;
+    height: 100vh;
+    background: #fff;
+    border-left: 2px solid #ddd;
+    border-radius: 12px 0 0 12px;
+    width: 28vw;              
+    display: flex;
+    flex-direction: column;
+    padding: 15px 20px;
+    z-index: 20;
 }
 
+
+/* Chat container flexbox */
 .chatContainer {
-    position: relative;
-    height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
+/* Messages area (scrollable) */
+.chattingDisplay {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    padding-right: 5px;
+}
 
+.chattingDisplay p {
+    background: #f1f1f1;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+/* Input area (sticky at bottom) */
 .chattingArea {
-    position: absolute;
+    display: flex;
+    gap: 10px;
+    position: sticky;
     bottom: 0;
+    background: #fff;
+    padding-top: 8px;
+    border-top: 1px solid #ddd;
+}
+
+.chattingArea input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.chattingArea button {
+    padding: 8px 14px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.chattingArea button:hover {
+    background: #0056b3;
 }
