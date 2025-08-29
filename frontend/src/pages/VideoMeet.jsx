@@ -18,10 +18,16 @@ const server_url = server;
 var connections = {};
 
 const peerConfigConnections = {
-    "iceServers": [
-        { "urls": "stun:stun.l.google.com:19302" }
-    ]
-}
+  iceServers: [
+    { urls: "stun:stun.l.google.com:19302" },   // Google STUN
+    {
+      urls: "turn:relay1.expressturn.com:3478", // Public TURN server
+      username: "ef1WfK4a4Z9p9Kmg",             // demo credentials
+      credential: "rZ2Vj2aQK6nXvJv8"
+    }
+  ]
+};
+
 
 export default function VideoMeetComponent() {
 
