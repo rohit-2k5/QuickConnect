@@ -16,7 +16,7 @@ QuickConnect is a real-time video conferencing application built with the MERN s
 | Backend      | Node.js, Express.js, Socket.io |
 | Frontend     | React.js, WebRTC |
 | Database     | MongoDB (optional for user/data persistence) |
-| Communication| WebRTC, Socket.io, PeerJS (if used) |
+| Communication| WebRTC, Socket.io |
 
 ##  Getting Started
 
