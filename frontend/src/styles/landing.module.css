@@ -1,3 +1,13 @@
+.logoContainer{
+  display: flex;
+  align-items: center;
+}
+
+.logocss{
+  height: 25px;
+  width: auto;
+}
+
 .para{
     color: gray;
     margin-top: 4rem;

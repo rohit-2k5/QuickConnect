@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "../styles/landing.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import Typewriter from "typewriter-effect";
+import { fontSize } from "@mui/system";
 
 export default function LandingPage() {
   const router = useNavigate();
@@ -11,7 +12,7 @@ export default function LandingPage() {
     <div className="landingPageContainer">
       <nav>
         <div className="navHeader">
-          <h2>Quick Connect</h2>
+          <div className={styles.logoContainer}><span><img className={styles.logocss} src="/logo.png" alt="q" /></span><p style={{fontSize: "1.2rem"}}>uick Connect</p></div>
         </div>
 
         {/* Nav links */}
