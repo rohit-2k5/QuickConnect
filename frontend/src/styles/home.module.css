@@ -1,0 +1,145 @@
+.hamburger {
+  display: none;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.nav{
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navRight{
+    display: flex;
+    align-items: center;
+}
+
+.history{
+    text-decoration: none;
+    color: black;
+    margin-bottom: 0.2rem;
+    margin-right: 1rem;
+    margin-left: -0.4rem;
+}
+
+.bodyMainContainer{
+    display: flex;
+}
+
+.leftSide{
+    width: 50%;
+    padding: 2rem;
+    line-height: 3rem;
+}
+
+.leftContent{
+    position: relative;
+    top: 10rem;
+    text-align: left;
+    padding-left: 15rem;
+}
+
+.joinText{
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.input{
+    width: 19rem;
+}
+
+.joinbtn{
+    height: 3.5rem;
+    width: 5rem;
+    margin-left: 1rem !important;
+}
+
+.righSide{
+    width: 50%;
+}
+
+.img{
+    height: 500px;
+    width: 550px;
+    margin-top: 2rem;
+}
+
+.logoutbtn{
+    text-transform:capitalize !important;
+}
+
+@media (max-width: 851px){
+
+.bodyMainContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.leftSide{
+   width: 100vw;    
+}
+
+.leftContent{
+    position: relative;
+    top: -2rem;
+    text-align: center;
+    padding: 1rem;
+}
+
+.joinbtn{
+    height: 2.5rem;
+    width: 10rem;
+    margin-top: 1rem !important;
+}
+
+.righSide{
+    width: 100vw;
+    order: -1;
+    display: flex;
+    justify-content: center;
+}
+
+.img{
+    height: 300px;
+    width: auto;
+}
+
+
+/* hamburger */
+.hamburger {
+    display: block;
+}
+
+.navRight {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 1rem;
+    background:gray;
+    padding: 0.5rem;
+    border-radius: 8px;
+    z-index: 100;
+  }
+
+  .navRight.active {
+    display: flex; 
+  }
+
+  .history {
+    color: white;
+    margin: 0.5rem 0;
+    font-size: 1rem;
+  }
+  
+
+  .logoutbtn{
+    text-transform:capitalize !important;
+    color: white !important;
+    font-size: 1rem !important;
+  }
+
+}
+

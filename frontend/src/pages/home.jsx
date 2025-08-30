@@ -1,76 +1,85 @@
 import React, { useContext, useState } from 'react'
 import withAuth from '../utils/withAuth'
-import { useNavigate } from 'react-router-dom'
-import "../App.css";
-import { Button, IconButton, TextField } from '@mui/material';
-import RestoreIcon from '@mui/icons-material/Restore';
+import { Link, useNavigate } from 'react-router-dom'
+import { Button, TextField } from '@mui/material';
 import { AuthContext } from '../contexts/AuthContext';
+import styles from "../styles/home.module.css";
 
 function HomeComponent() {
+  let navigate = useNavigate();
+  const [meetingCode, setMeetingCode] = useState("");
+  const [isHamOpen, setIsHamOpen] = useState(false);
 
+  const { addToUserHistory } = useContext(AuthContext);
 
-    let navigate = useNavigate();
-    const [meetingCode, setMeetingCode] = useState("");
+  let handleJoinVideoCall = async () => {
+    await addToUserHistory(meetingCode);
+    navigate(`/${meetingCode}`);
+  };
 
+  return (
+    <>
+      <div className={styles.nav}>
+        <div>
+          <h2>Quick Connect</h2>
+        </div>
 
-    const {addToUserHistory} = useContext(AuthContext);
-    let handleJoinVideoCall = async () => {
-        await addToUserHistory(meetingCode)
-        navigate(`/${meetingCode}`)
-    }
+        <div className={styles.navRightContainer}>
+          {/* Hamburger */}
+          <div className={styles.hamburger} onClick={() => setIsHamOpen(!isHamOpen)}>
+            ☰
+          </div>
 
-    return (
-        <>
+          {/* Menu links */}
+          <div className={`${styles.navRight} ${isHamOpen ? styles.active : ""}`}>
 
-            <div className="navBar">
+            <Link to={"/history"} className={styles.history}>
+              History
+            </Link>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
+            <Button
+              className={styles.logoutbtn}
+              variant={isHamOpen ? "" : "contained"}
+              onClick={() => {
+                localStorage.removeItem("token");
+                navigate("/auth");
+              }}
+            >
+            logout
+            </Button>
+          </div>
+        </div>
+      </div>
 
-                    <h2>Quick Connect</h2>
-                </div>
+      <div className={styles.bodyMainContainer}>
+        <div className={styles.leftSide}>
+          <div className={styles.leftContent}>
+            <h2 className={styles.joinText}>Join Meeting</h2>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
-                    <IconButton onClick={
-                        () => {
-                            navigate("/history")
-                        }
-                    }>
-                        <RestoreIcon />
-                    </IconButton>
-                    <p>History</p>
+            <TextField
+              className={styles.input}
+              onChange={(e) => setMeetingCode(e.target.value)}
+              id="outlined-basic"
+              label="Meeting Code"
+              variant="outlined"
+            />
 
-                    <Button onClick={() => {
-                        localStorage.removeItem("token")
-                        navigate("/auth")
-                    }}>
-                        Logout
-                    </Button>
-                </div>
+            <Button
+              className={styles.joinbtn}
+              onClick={handleJoinVideoCall}
+              variant="contained"
+            >
+              Join
+            </Button>
+          </div>
+        </div>
 
-
-            </div>
-
-
-            <div className="meetContainer">
-                <div className="leftPanel">
-                    <div>
-                        <h2>Providing Quality Video Call Just Like Quality Education</h2>
-
-                        <div style={{ display: 'flex', gap: "10px" }}>
-
-                            <TextField onChange={e => setMeetingCode(e.target.value)} id="outlined-basic" label="Meeting Code" variant="outlined" />
-                            <Button onClick={handleJoinVideoCall} variant='contained'>Join</Button>
-
-                        </div>
-                    </div>
-                </div>
-                <div className='rightPanel'>
-                    <img srcSet='/logo3.png' alt="" />
-                </div>
-            </div>
-        </>
-    )
+        <div className={styles.righSide}>
+          <img className={styles.img} srcSet="/logo3.png" alt="" />
+        </div>
+      </div>
+    </>
+  );
 }
 
-
-export default withAuth(HomeComponent)
+export default withAuth(HomeComponent);
