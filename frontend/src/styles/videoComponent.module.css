@@ -4,15 +4,14 @@
     background: rgb(1, 4, 48);
 }
 
-/* Your video preview (small in corner) */
+/* video preview (small in corner) */
 .meetUserVideo {
     position: absolute;
     bottom: 10vh;
-    height: 18vh;   /* slightly smaller so friend’s video looks bigger */
-    width: auto;
+    height: 18vh;   
+    width: fit-content;
     left: 20px;
     border-radius: 12px;
-    border: 2px solid #fff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     object-fit: cover;
     z-index: 10;
