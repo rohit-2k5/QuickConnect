@@ -1,5 +1,7 @@
-.landingPageContainer{
-  height: 100svh;
+.fullscreen {
+  height: calc(var(--vh, 1vh) * 100);
+  width: 100%;
+  overflow: hidden;
 }
 
 .logoContainer{
