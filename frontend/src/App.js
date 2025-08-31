@@ -6,10 +6,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import VideoMeetComponent from './pages/VideoMeet';
 import HomeComponent from './pages/home';
 import History from './pages/history';
-import useVh from "./utils/useVh.js";
 
 function App() {
-  useVh();
   return (
     <div className="App">
 
