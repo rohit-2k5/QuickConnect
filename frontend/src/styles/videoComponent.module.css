@@ -148,7 +148,7 @@
 /* this is for giving the permission page where we enter our name */
 
 .permissionMainBox{
-    height: 100vh;
+    height: 100dvh;
     display: flex;
 }
 

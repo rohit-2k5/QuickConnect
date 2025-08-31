@@ -1,3 +1,7 @@
+.landingPageContainer{
+  height: 100dvh;
+}
+
 .logoContainer{
   display: flex;
   align-items: center;
