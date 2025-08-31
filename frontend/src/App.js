@@ -11,13 +11,9 @@ function App() {
   return (
     <div className="App">
 
-      <Router>
-
-        <AuthProvider>
-
-
+      <Router basename="/QuickConnect">
+      <AuthProvider>
           <Routes>
-
             <Route path='/' element={<LandingPage />} />
 
             <Route path='/auth' element={<Authentication />} />
