@@ -14,6 +14,9 @@
   background-size:cover;
   background-repeat: no-repeat;
   color: white;
+
+  background: #111; 
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .landingPageContainer nav {
