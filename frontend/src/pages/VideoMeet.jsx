@@ -64,15 +64,9 @@ export default function VideoMeetComponent() {
 
     let [videos, setVideos] = useState([])
 
-    // TODO
-    // if(isChrome() === false) {
-
-
-    // }
 
     useEffect(() => {
         getPermissions();
-
     })
 
     let getDislayMedia = () => {
