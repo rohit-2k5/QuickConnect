@@ -457,25 +457,20 @@ export default function VideoMeetComponent() {
             {askForUsername === true ?
 
                 <div className={styles.permissionMainBox}>
-
                     <div className={styles.permissionLeft}>
                         <div className={styles.permissionLeftContent}>
                             <h2 style={{marginBottom: "0.5rem"}}>Select a Name For Yourself</h2>
                             <TextField id="outlined-basic" label="Name For Videocall" value={username} onChange={e => setUsername(e.target.value)} variant="outlined" />
                             <Button className={styles.permissionBtn} variant="contained" onClick={connect}>Connect</Button>
                         </div>
-                    
                     </div>
-
 
                     <div className={styles.permissionRight}>
                        <div className={styles.videoContainer}><video className={styles.videoPreview} ref={localVideoref} autoPlay muted></video></div>
                         <div>
                             <h2 className={styles.yourPreviewText}>Your Preview...</h2>
                         </div>
-                        
                     </div>
-
                 </div> :
 
 

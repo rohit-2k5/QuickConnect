@@ -1,6 +1,6 @@
 .meetVideoContainer {
     position: relative;
-    height: 100vh;
+    height: 100dvh;
     background: rgb(1, 4, 48);
 }
 
@@ -129,6 +129,20 @@
 .chattingArea button:hover {
     background: #0056b3;
 }
+
+@media(max-width: 600px){
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 /* this is for giving the permission page where we enter our name */
