@@ -4,9 +4,7 @@
   box-sizing: border-box;
 }
 
-.landingPageContainer{
-  height: 100vh;
-}
+
 
 .logoContainer{
   display: flex;

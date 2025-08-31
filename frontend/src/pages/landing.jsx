@@ -9,7 +9,7 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return ( 
-    <div className="landingPageContainer">
+    <>
       <nav>
         <div className="navHeader">
           <div className={styles.logoContainer}><span><img className={styles.logocss} src="/logo.png" alt="q" /></span><p style={{fontSize: "1.2rem"}}>uick Connect</p></div>
@@ -80,6 +80,6 @@ export default function LandingPage() {
           <img src="/mobile.png" alt="App Preview" />
         </div>
       </div>
-    </div> 
+    </> 
   );
 }
