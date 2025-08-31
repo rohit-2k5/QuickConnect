@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
 
-      <Router basename="/QuickConnect">
+      <Router>
       <AuthProvider>
           <Routes>
             <Route path='/' element={<LandingPage />} />
