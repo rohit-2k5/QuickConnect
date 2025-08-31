@@ -9,6 +9,7 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
+  <>  
     <div className="landingPageContainer">
       <nav>
         <div className="navHeader">
@@ -81,5 +82,6 @@ export default function LandingPage() {
         </div>
       </div>
     </div>
+  </>  
   );
 }
