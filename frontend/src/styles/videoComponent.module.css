@@ -5,9 +5,9 @@
 }
 
 /* video preview (small in corner) */
-.meetUserVideo {
+.meetUserVideo{
     position: absolute;
-    bottom: 10vh;
+    bottom: 12vh;
     height: 18vh;   
     width: fit-content;
     left: 20px;
@@ -16,6 +16,7 @@
     object-fit: cover;
     z-index: 10;
 }
+
 
 /* Control buttons */
 .buttonContainers {
@@ -38,13 +39,50 @@
 
 /* Remote video(s) */
 .conferenceView { 
-    display: flex;
-    width: 69rem;
-    height: 42rem;
+    display: grid;
+    width: 57vw;
+    height: 10vh;
     padding: 10px;
     gap: 10px;
+    place-items: right;
     
+    /* Dynamic grid based on number of videos */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(150px, 1fr));
 }
+
+/* For 1 video - full size */
+.conferenceView1 {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: 1fr !important;
+    width: 56vw !important;
+    height: 85% !important;
+}
+
+/* For 2 videos - side by side */
+.conferenceView2 {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr !important;
+    width: 70vw !important;
+    height: 90% !important;
+}
+
+/* For 3 videos - 2 on top, 1 on bottom */
+.conferenceView3 {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    width: 56vw !important;
+    height: 40vh !important;
+}
+
+/* For 4 videos - 2x2 grid */
+.conferenceView4 {
+    grid-template-columns: 1fr 1fr !important;
+    grid-template-rows: 1fr 1fr !important;
+    width: 56vw !important;
+    height: 40vh !important;
+}
+
 
 .conferenceView video {
     width: 100%;     
@@ -67,7 +105,7 @@
     width: 28vw;              
     display: flex;
     flex-direction: column;
-    padding: 15px 20px;
+    padding: 10px 0;
     z-index: 20;
     overflow-y: auto; 
 }
@@ -78,34 +116,36 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 /* Messages area (scrollable) */
 .chattingDisplay {
     flex: 1;
     overflow-y: auto;
+    margin-left: 1rem;
     margin-bottom: 10px;
     padding-right: 5px;
+    max-height: calc(100vh - 120px);
+    min-height: 300px;
 }
 
 .chattingDisplay p {
-    background: #f1f1f1;
-    padding: 8px 12px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-    max-width: 80%;
     word-wrap: break-word;
 }
 
 /* Input area (sticky at bottom) */
 .chattingArea {
     display: flex;
+    padding-left: 1rem;
     gap: 10px;
     position: sticky;
     bottom: 0;
     background: #fff;
     padding-top: 8px;
+    padding-bottom: 1rem;
     border-top: 1px solid #ddd;
+    margin-top: auto;
 }
 
 .chattingArea input {
