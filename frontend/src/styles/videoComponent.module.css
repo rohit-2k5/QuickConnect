@@ -170,7 +170,7 @@
     background: #0056b3;
 }
 
-@media(max-width: 400px){
+@media(max-width: 1000px){
 .meetUserVideo{
     position: absolute;
     bottom: 16vh;
@@ -235,6 +235,7 @@
 .chatRoom {
     height: 80vh;
     width: 100vw; 
+
 }
 
 
