@@ -749,20 +749,8 @@ export default function VideoMeetComponent() {
                     </Alert>
             </Snackbar>
 
-            {/* Auto-rejoin notification */}
-            <Snackbar 
-                open={isInMeeting && !askForUsername && localStorage.getItem('quickConnect_meeting_state')} 
-                autoHideDuration={2000} 
-                TransitionComponent={SlideTransition}
-            >
-                <Alert
-                    severity="info"
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    Meeting state saved. You can safely refresh if needed.
-                </Alert>
-            </Snackbar>
+           
+           
         </div>
     )
 }
