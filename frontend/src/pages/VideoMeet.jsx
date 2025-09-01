@@ -12,6 +12,8 @@ import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import StopScreenShareIcon from '@mui/icons-material/StopScreenShare'
 import ChatIcon from '@mui/icons-material/Chat'
 import server from '../environment';
+import SendIcon from '@mui/icons-material/Send';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const server_url = server;
 
@@ -49,7 +51,7 @@ export default function VideoMeetComponent() {
 
     let [screen, setScreen] = useState();
 
-    let [showModal, setModal] = useState(true);
+    let [showModal, setModal] = useState(false);
 
     let [screenAvailable, setScreenAvailable] = useState();
 
@@ -463,6 +465,10 @@ export default function VideoMeetComponent() {
         getMedia();
     }
 
+    const handleclosechat = () =>{
+        setModal(false);
+    }
+
 
     return (
         <div>
@@ -492,7 +498,7 @@ export default function VideoMeetComponent() {
                     {showModal ? <div className={styles.chatRoom}>
 
                         <div className={styles.chatContainer}>
-                            <h1 style={{position: "sticky", top: "0rem", backgroundColor: "white", marginLeft: "1rem", marginBottom: "1rem"}}>chats</h1>
+                            <div style={{display: "flex", alignItems: "center", position: "sticky", top: "0rem", backgroundColor: "white", marginLeft: "1rem", marginBottom: "1rem"}}><ArrowBackIcon onClick={handleclosechat} sx={{height: "4rem", width: "2rem", marginRight: "1rem"}}/>Chats</div>
 
                             <div className={styles.chattingDisplay} ref={chatDisplayRef}>
 
@@ -541,7 +547,7 @@ export default function VideoMeetComponent() {
                                     id="outlined-basic" 
                                     variant="outlined" 
                                 />
-                                <Button className='chatareasendbutton' variant='contained' onClick={sendMessage}>Send</Button>
+                                <Button className='chatareasendbutton' variant='contained' onClick={sendMessage}><SendIcon></SendIcon></Button>
                             </div>
 
 
@@ -569,10 +575,11 @@ export default function VideoMeetComponent() {
                             <></>
                         }
 
-                        <Badge badgeContent={newMessages} max={999} style={{ color: "aqua"}}>
-                            <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>
-                                <ChatIcon />                        </IconButton>
-                        </Badge>
+                        
+                        <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>
+                                <ChatIcon />                        
+                        </IconButton>
+                        
 
                     </div>
 
