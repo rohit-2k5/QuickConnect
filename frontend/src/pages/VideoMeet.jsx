@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import io from "socket.io-client";
-import { Badge, IconButton, TextField, Snackbar, Alert, Slide } from '@mui/material';
+import { Badge, IconButton, TextField, Snackbar, Alert, Slide, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { Button } from '@mui/material';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff'
@@ -34,6 +34,8 @@ const peerConfigConnections = {
 export default function VideoMeetComponent() {
 
     const [open, setOpen] = useState({open: false, severity: "", message: ""});
+    const [showRefreshDialog, setShowRefreshDialog] = useState(false);
+    const [isInMeeting, setIsInMeeting] = useState(false);
     
 
     var socketRef = useRef();
@@ -82,6 +84,100 @@ export default function VideoMeetComponent() {
         setOpen(false);
       };
 
+    // Check for saved meeting state on component mount
+    useEffect(() => {
+        const savedMeetingState = localStorage.getItem('quickConnect_meeting_state');
+        if (savedMeetingState) {
+            try {
+                const state = JSON.parse(savedMeetingState);
+                if (state.username && state.meetingUrl === window.location.href) {
+                    setUsername(state.username);
+                    setAskForUsername(false);
+                    setIsInMeeting(true);
+                    // Auto-rejoin the meeting
+                    setTimeout(() => {
+                        getMedia();
+                    }, 1000);
+                }
+            } catch (error) {
+                console.log('Error parsing saved meeting state:', error);
+                localStorage.removeItem('quickConnect_meeting_state');
+            }
+        }
+    }, []);
+
+    // Save meeting state to localStorage
+    const saveMeetingState = () => {
+        if (username && !askForUsername) {
+            const meetingState = {
+                username: username,
+                meetingUrl: window.location.href,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('quickConnect_meeting_state', JSON.stringify(meetingState));
+        }
+    };
+
+    // Clear meeting state from localStorage
+    const clearMeetingState = () => {
+        localStorage.removeItem('quickConnect_meeting_state');
+    };
+
+    // Handle beforeunload event to prevent accidental refresh
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (isInMeeting && !askForUsername) {
+                const message = 'Are you sure you want to leave the meeting? You will be disconnected.';
+                e.preventDefault();
+                e.returnValue = message;
+                return message;
+            }
+        };
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'hidden' && isInMeeting) {
+                saveMeetingState();
+            }
+        };
+
+        const handleKeyDown = (e) => {
+            // Prevent F5, Ctrl+R, Ctrl+Shift+R
+            if (isInMeeting && !askForUsername) {
+                if (e.key === 'F5' || 
+                    (e.ctrlKey && e.key === 'r') || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'R')) {
+                    e.preventDefault();
+                    setShowRefreshDialog(true);
+                }
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isInMeeting, askForUsername]);
+
+    // Save meeting state whenever meeting state changes
+    useEffect(() => {
+        if (isInMeeting && !askForUsername) {
+            saveMeetingState();
+        }
+    }, [isInMeeting, askForUsername, username]);
+
+    // Cleanup function for when component unmounts
+    useEffect(() => {
+        return () => {
+            if (socketRef.current && isInMeeting) {
+                socketRef.current.disconnect();
+            }
+        };
+    }, [isInMeeting]);
 
     useEffect(() => {
         getPermissions();
@@ -432,6 +528,8 @@ export default function VideoMeetComponent() {
             let tracks = localVideoref.current.srcObject.getTracks()
             tracks.forEach(track => track.stop())
         } catch (e) { }
+        clearMeetingState();
+        setIsInMeeting(false);
         window.location.href = "/home"
     }
 
@@ -462,6 +560,7 @@ export default function VideoMeetComponent() {
             return;
         }
         setAskForUsername(false);
+        setIsInMeeting(true);
         getMedia();
     }
 
@@ -472,6 +571,32 @@ export default function VideoMeetComponent() {
 
     return (
         <div>
+
+            {/* Refresh Prevention Dialog */}
+            <Dialog
+                open={showRefreshDialog}
+                onClose={() => setShowRefreshDialog(false)}
+                aria-labelledby="refresh-dialog-title"
+            >
+                <DialogTitle id="refresh-dialog-title">
+                    Leave Meeting?
+                </DialogTitle>
+                <DialogContent>
+                    Are you sure you want to leave the meeting? You will be disconnected from the call.
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => setShowRefreshDialog(false)} color="primary">
+                        Stay in Meeting
+                    </Button>
+                    <Button onClick={() => {
+                        setShowRefreshDialog(false);
+                        clearMeetingState();
+                        window.location.reload();
+                    }} color="secondary">
+                        Leave Meeting
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
             {askForUsername === true ?
 
@@ -622,6 +747,21 @@ export default function VideoMeetComponent() {
                     >
                       {open.message}
                     </Alert>
+            </Snackbar>
+
+            {/* Auto-rejoin notification */}
+            <Snackbar 
+                open={isInMeeting && !askForUsername && localStorage.getItem('quickConnect_meeting_state')} 
+                autoHideDuration={2000} 
+                TransitionComponent={SlideTransition}
+            >
+                <Alert
+                    severity="info"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    Meeting state saved. You can safely refresh if needed.
+                </Alert>
             </Snackbar>
         </div>
     )
