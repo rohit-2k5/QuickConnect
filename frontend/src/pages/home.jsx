@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import withAuth from '../utils/withAuth'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Snackbar, Alert, Slide } from '@mui/material';
 import { AuthContext } from '../contexts/AuthContext';
 import styles from "../styles/home.module.css";
 
@@ -10,12 +10,36 @@ function HomeComponent() {
   const [meetingCode, setMeetingCode] = useState("");
   const [isHamOpen, setIsHamOpen] = useState(false);
 
+  const [open, setOpen] = useState({open: false, severity: "", message: ""});
+
+
   const { addToUserHistory } = useContext(AuthContext);
+  
+  // snakbar functions
+  function SlideTransition(props) {
+    return <Slide {...props} direction="up" />;
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
+
+
 
   let handleJoinVideoCall = async () => {
+    
+    if(meetingCode === ""){
+      setOpen({open: true, severity: "error", message: "Metting Code is required"});
+      return;
+    }
+    
     await addToUserHistory(meetingCode);
     navigate(`/${meetingCode}`);
-  };
+    
+};
 
   return (
     <>
@@ -78,6 +102,21 @@ function HomeComponent() {
           <img className={styles.img} srcSet="/logo3.png" alt="" />
         </div>
       </div>
+      <Snackbar 
+        open={open.open} 
+        autoHideDuration={3000} 
+        onClose={handleClose} 
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={open.severity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {open.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

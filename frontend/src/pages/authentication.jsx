@@ -10,6 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from '../contexts/AuthContext';
 import { Snackbar } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -17,10 +19,11 @@ import { Snackbar } from '@mui/material';
 
 const defaultTheme = createTheme();
 
+
 export default function Authentication() {
 
     
-
+    const navigate = useNavigate();
     const [username, setUsername] = React.useState();
     const [password, setPassword] = React.useState();
     const [name, setName] = React.useState();
@@ -154,6 +157,11 @@ export default function Authentication() {
                                 {formState === 0 ? "Login " : "Register"}
                             </Button>
 
+                           <div style={{display: "flex"}}>
+                            <HomeIcon style={{ cursor: "pointer" }} onClick={() => navigate('/')}></HomeIcon>
+                            <p style={{marginLeft:"0.1rem", marginTop:"0.1rem"}}>Home</p>
+                           </div>
+
                         </Box>
                     </Box>
                 </Grid>
@@ -165,7 +173,9 @@ export default function Authentication() {
                 autoHideDuration={4000}
                 message={message}
             />
-
+        
         </ThemeProvider>
+
+        
     );
 }

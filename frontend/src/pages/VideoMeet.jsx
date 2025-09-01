@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import io from "socket.io-client";
-import { Badge, IconButton, TextField } from '@mui/material';
+import { Badge, IconButton, TextField, Snackbar, Alert, Slide } from '@mui/material';
 import { Button } from '@mui/material';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff'
@@ -30,6 +30,9 @@ const peerConfigConnections = {
 
 
 export default function VideoMeetComponent() {
+
+    const [open, setOpen] = useState({open: false, severity: "", message: ""});
+    
 
     var socketRef = useRef();
     let socketIdRef = useRef();
@@ -64,6 +67,18 @@ export default function VideoMeetComponent() {
     const chatDisplayRef = useRef(null)
 
     let [videos, setVideos] = useState([])
+
+    // snakbar functions
+      function SlideTransition(props) {
+        return <Slide {...props} direction="up" />;
+      }
+    
+      const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+      };
 
 
     useEffect(() => {
@@ -418,16 +433,6 @@ export default function VideoMeetComponent() {
         window.location.href = "/home"
     }
 
-    let openChat = () => {
-        setModal(true);
-        setNewMessages(0);
-    }
-    let closeChat = () => {
-        setModal(false);
-    }
-    let handleMessage = (e) => {
-        setMessage(e.target.value);
-    }
 
     const addMessage = (data, sender, socketIdSender) => {
         setMessages((prevMessages) => [
@@ -449,6 +454,11 @@ export default function VideoMeetComponent() {
 
     
     let connect = () => {
+        
+        if(username === ""){
+            setOpen({open: true, severity: "error", message: "Please Select a name for Yourself"});
+            return;
+        }
         setAskForUsername(false);
         getMedia();
     }
@@ -591,7 +601,21 @@ export default function VideoMeetComponent() {
                 </div>
 
             }
-
+            <Snackbar 
+                    open={open.open} 
+                    autoHideDuration={3000} 
+                    onClose={handleClose} 
+                    TransitionComponent={SlideTransition}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity={open.severity}
+                      variant="filled"
+                      sx={{ width: '100%' }}
+                    >
+                      {open.message}
+                    </Alert>
+            </Snackbar>
         </div>
     )
 }
