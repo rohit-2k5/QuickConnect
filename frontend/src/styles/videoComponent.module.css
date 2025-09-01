@@ -43,7 +43,6 @@
     display: grid;
     width: 57vw;
     height: 10dvh;
-    max-height: 10dvh;
     padding: 10px;
     gap: 10px;
     place-items: right;
