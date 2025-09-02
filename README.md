@@ -4,30 +4,26 @@ QuickConnect is a real-time video conferencing application built with the MERN s
 
 ##  Features
 - **Real-Time Video & Audio** – High-quality peer-to-peer video and audio using WebRTC.
+- **screen sharing** - Share your screen instantly during meetings
+- **Clean & Responsive UI** – Built with modern front-end principles for a smooth user experience across devices.
 - **Room Creation & Join** – Create unique meeting rooms or join existing ones via room IDs.
 - **MERN Stack** – Powered by MongoDB, Express.js, React.js, and Node.js for a robust full-stack experience.
 - **Socket.io Signaling** – Efficient and low-latency signaling between clients using Socket.io.
-- **Clean & Responsive UI** – Built with modern front-end principles for a smooth user experience across devices.
-- **Scalable Architecture** – Structured into clear `backend` and `frontend` directories for easy collaboration and deployment.
+
+# Checkout 
+- **Quick Connect** - https://quickconnectfrontend.onrender.com
+
 
 ##  Tech Stack
 | Component    | Technology       |
 |--------------|------------------|
 | Backend      | Node.js, Express.js, Socket.io |
 | Frontend     | React.js, WebRTC |
-| Database     | MongoDB (optional for user/data persistence) |
+| Database     | MongoDB  |
 | Communication| WebRTC, Socket.io |
 
-##  Getting Started
+# Learning
 
-### Prerequisites
-- [Node.js](https://nodejs.org/) (v14+ recommended)
-- Optional: MongoDB (local or cloud, if you implement data storage)
+Working on this project taught me the importance of debugging and problem-solving. For example, I struggled with SPA routing issues in React (Single Page Application navigation problems) and making the app fully responsive across devices. I kept trying different approaches, learning from mistakes, and finally finding the right solutions.
 
-### Installation
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/rohit-2k5/QuickConnect.git
-   cd QuickConnect
+This project showed me how real-world apps behave differently once users interact with them — it’s never perfect at first. Each challenge became a learning opportunity, and I’m continuously improving myself day by day, project by project.
