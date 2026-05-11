@@ -508,34 +508,33 @@ export default function VideoMeetComponent() {
     }
 
     let flipCamera = async () => {
-        const newFacingMode = facingMode === 'user' ? 'environment' : 'user';
         try {
-            const videoTrack = window.localStream && window.localStream.getVideoTracks()[0];
+            // Enumerate all video inputs (works once getUserMedia has already been granted)
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const videoDevices = devices.filter(d => d.kind === 'videoinput');
 
-            if (videoTrack) {
-                // PRIMARY: applyConstraints() — switches camera WITHOUT stopping/restarting hardware.
-                // This is the correct approach for iOS Safari and modern Android Chrome.
-                try {
-                    await videoTrack.applyConstraints({
-                        facingMode: { ideal: newFacingMode }
-                    });
-                    setFacingMode(newFacingMode);
-                    return; // success — done
-                } catch (constraintErr) {
-                    console.log('applyConstraints failed, trying full restart:', constraintErr.name);
-                }
+            if (videoDevices.length < 2) {
+                setOpen({ open: true, severity: 'warning', message: 'No secondary camera found on this device' });
+                return;
             }
 
-            // FALLBACK: stop video tracks, wait for hardware to release, then get new stream
+            // Find which camera is currently active, then pick the next one
+            const currentTrack = window.localStream && window.localStream.getVideoTracks()[0];
+            const currentDeviceId = currentTrack ? currentTrack.getSettings().deviceId : null;
+            const currentIndex = videoDevices.findIndex(d => d.deviceId === currentDeviceId);
+            const nextDevice = videoDevices[(currentIndex + 1) % videoDevices.length];
+
+            // Stop current video tracks to release the hardware
             if (window.localStream) {
                 window.localStream.getVideoTracks().forEach(track => track.stop());
             }
 
-            // Give the camera hardware time to fully release before re-opening it
-            await new Promise(resolve => setTimeout(resolve, 500));
+            // Give the camera hardware time to release before re-opening
+            await new Promise(resolve => setTimeout(resolve, 300));
 
+            // Request only the new camera — audio: false avoids mic conflict
             const newVideoStream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: { ideal: newFacingMode } },
+                video: { deviceId: { exact: nextDevice.deviceId } },
                 audio: false
             });
 
@@ -548,12 +547,15 @@ export default function VideoMeetComponent() {
             }
             window.localStream = combinedStream;
 
+            // Replace the outgoing video track for all remote peers — no renegotiation needed
             for (let id in connections) {
                 const sender = connections[id].getSenders().find(s => s.track && s.track.kind === 'video');
                 if (sender) sender.replaceTrack(newVideoTrack);
             }
 
-            setFacingMode(newFacingMode);
+            // Toggle facing mode label for the button icon
+            setFacingMode(prev => prev === 'user' ? 'environment' : 'user');
+
         } catch (e) {
             console.log('Camera flip error:', e.name, e.message);
             setOpen({ open: true, severity: 'error', message: 'Camera switch failed: ' + (e.name || e.message) });
