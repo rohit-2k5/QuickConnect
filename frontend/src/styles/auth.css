@@ -1,0 +1,265 @@
+/* ================================================
+   Auth Page — MUI Component Overrides
+   auth.css  (imported via App.css)
+   ================================================ */
+
+/* ── Kill MUI default light theme on the root ────── */
+/* Remove any white/grey MUI theme backgrounds */
+.MuiCssBaseline-root,
+#root,
+body {
+  background: #0a0a0f !important;
+  color: #f0f0ff !important;
+}
+
+/* ── Outer Grid: full-screen dark background ─────── */
+.MuiGrid-root.MuiGrid-container {
+  background: #0a0a0f !important;
+  min-height: 100dvh !important;
+  width: 100dvw !important;
+  /* Override MUI Grid's default flexbox so we can center */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* ── Hide the left decorative/image panel ────────── */
+/* The left Grid item (xs=false, sm=4, md=7) */
+.MuiGrid-root.MuiGrid-container > .MuiGrid-item:first-child {
+  display: none !important;
+}
+
+/* ── Right panel: no longer a side-panel, now a centered card ─── */
+.MuiGrid-root.MuiGrid-container > .MuiGrid-item:last-child {
+  /* Detach from MUI's grid sizing — become a standalone centered card */
+  max-width: 460px !important;
+  width: 100% !important;
+  flex-basis: unset !important;
+  flex-grow: 0 !important;
+  /* Override the MuiGrid-item xs=12 full-width default at small screens */
+  padding: 0 1rem !important;
+}
+
+/* ── Paper (form card) — glassmorphism centered card ─── */
+.MuiPaper-root.MuiPaper-elevation {
+  background: rgba(18, 18, 30, 0.88) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 40px rgba(79, 70, 229, 0.08) !important;
+  padding: 2.5rem 2rem !important;
+  /* Allow fixed children to escape the card boundaries */
+  overflow: visible !important;
+}
+
+/* ── Inner Box — also allow overflow ─────────────── */
+.MuiPaper-root .MuiBox-root {
+  overflow: visible !important;
+}
+
+/* ── Inner Box (the my:8, mx:4 box) ──────────────── */
+/* Reset MUI's large margin that was designed for the sidebar layout */
+.MuiPaper-root .MuiBox-root:first-child {
+  margin-top: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* ── Avatar (Lock icon) ──────────────────────────── */
+.MuiAvatar-root {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  box-shadow: 0 0 24px rgba(79, 70, 229, 0.45) !important;
+  width: 56px !important;
+  height: 56px !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* ── Toggle Buttons row (Sign In / Sign Up) ──────── */
+.MuiBox-root > div > .MuiButtonBase-root {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  color: #8b8ba7 !important;
+  border-radius: 9px !important;
+  padding: 0.45rem 1.3rem !important;
+  text-transform: none !important;
+  transition: color 0.2s ease, background 0.2s ease !important;
+  background: transparent !important;
+}
+
+.MuiBox-root > div > .MuiButtonBase-root:hover {
+  color: #f0f0ff !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.MuiBox-root > div > .MuiButtonBase-root.MuiButton-contained {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 0 16px rgba(79, 70, 229, 0.4) !important;
+  border-radius: 9px !important;
+}
+
+/* ── Text Fields ─────────────────────────────────── */
+.MuiTextField-root {
+  margin-block: 0.5rem !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root {
+  background: rgba(26, 26, 46, 0.9) !important;
+  border-radius: 12px !important;
+  color: #f0f0ff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.95rem !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.10) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(79, 70, 229, 0.45) !important;
+}
+
+.MuiTextField-root .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.18) !important;
+}
+
+.MuiTextField-root .MuiInputLabel-root {
+  color: #8b8ba7 !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.MuiTextField-root .MuiInputLabel-root.Mui-focused {
+  color: #4f46e5 !important;
+}
+
+.MuiTextField-root .MuiInputBase-input {
+  color: #f0f0ff !important;
+}
+
+/* Password eye icon */
+.MuiTextField-root .MuiInputAdornment-root .MuiIconButton-root {
+  color: #8b8ba7 !important;
+}
+
+/* ── Primary CTA Button (Login / Register) ────────── */
+.MuiBox-root > .MuiBox-root > .MuiButtonBase-root.MuiButton-contained[type='button'] {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  border-radius: 9999px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  padding: 0.8rem 1.5rem !important;
+  box-shadow: 0 0 24px rgba(79, 70, 229, 0.35) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+  letter-spacing: 0.01em !important;
+  border: none !important;
+}
+
+.MuiBox-root > .MuiBox-root > .MuiButtonBase-root.MuiButton-contained[type='button']:hover {
+  box-shadow: 0 0 40px rgba(79, 70, 229, 0.6) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── Home Link — fixed top-left viewport back button ── */
+.MuiBox-root > .MuiBox-root > div[style*='display: flex'] {
+  position: fixed !important;
+  top: 24px !important;
+  left: 24px !important;
+  z-index: 9999 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 0.5rem 1rem 0.5rem 0.8rem !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
+  border-radius: 9999px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  cursor: pointer !important;
+  color: #8b8ba7 !important;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  margin: 0 !important;
+  /* Ensure it doesn't inherit any parent transform/overflow constraints */
+  transform: none !important;
+  width: auto !important;
+}
+
+.MuiBox-root > .MuiBox-root > div[style*='display: flex']:hover {
+  color: #f0f0ff !important;
+  background: rgba(79, 70, 229, 0.12) !important;
+  border-color: rgba(79, 70, 229, 0.35) !important;
+  box-shadow: 0 4px 24px rgba(79, 70, 229, 0.2) !important;
+}
+
+/* Home icon */
+.MuiBox-root > .MuiBox-root > div[style*='display: flex'] svg {
+  color: inherit !important;
+  font-size: 1rem !important;
+  width: 1rem !important;
+  height: 1rem !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+/* "Home" text */
+.MuiBox-root > .MuiBox-root > div[style*='display: flex'] p {
+  color: inherit !important;
+  font-size: 0.82rem !important;
+  font-weight: 500 !important;
+  font-family: 'Inter', sans-serif !important;
+  margin: 0 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.02em !important;
+  white-space: nowrap !important;
+}
+
+/* ── Error text ───────────────────────────────────── */
+.MuiBox-root p[style*='color: red'] {
+  color: #f87171 !important;
+  font-size: 0.8rem !important;
+  font-family: 'Inter', sans-serif !important;
+  padding: 0 !important;
+  margin-top: 0.25rem !important;
+  font-weight: 500 !important;
+}
+
+/* ── Snackbar ─────────────────────────────────────── */
+.MuiSnackbar-root .MuiPaper-root {
+  background: rgba(30, 30, 50, 0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 12px !important;
+  color: #f0f0ff !important;
+  font-family: 'Inter', sans-serif !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ── Background radial glow behind the card ─────── */
+/* Applied to the outer Grid container's ::before pseudo */
+.MuiGrid-root.MuiGrid-container::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  background:
+    radial-gradient(ellipse 70% 55% at 30% 40%, rgba(79, 70, 229, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 75% 65%, rgba(124, 58, 237, 0.13) 0%, transparent 55%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* Make Paper sit above the pseudo-element */
+.MuiGrid-root.MuiGrid-container > .MuiGrid-item:last-child {
+  position: relative !important;
+  z-index: 1 !important;
+}

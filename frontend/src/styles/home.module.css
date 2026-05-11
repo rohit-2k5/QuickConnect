@@ -1,145 +1,333 @@
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  cursor: pointer;
+/* ================================================
+   Home / Dashboard — home.module.css
+   ================================================ */
+
+/* ── Page Shell ──────────────────────────────────── */
+/* (applied via a wrapper element if any, but the 
+   component renders <> directly, so nav/body 
+   classes handle the BG) */
+
+/* ── Navbar ──────────────────────────────────────── */
+.nav {
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 15, 0.80);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
-.nav{
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
+.nav h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.navRight{
-    display: flex;
-    align-items: center;
-}
-
-.history{
-    text-decoration: none;
-    color: black;
-    margin-bottom: 0.2rem;
-    margin-right: 1rem;
-    margin-left: -0.4rem;
-}
-
-.bodyMainContainer{
-    display: flex;
-}
-
-.leftSide{
-    width: 50%;
-    padding: 2rem;
-    line-height: 3rem;
-}
-
-.leftContent{
-    position: relative;
-    top: 10rem;
-    text-align: left;
-    padding-left: 15rem;
-}
-
-.joinText{
-    font-size: 2rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-}
-
-.input{
-    width: 19rem;
-}
-
-.joinbtn{
-    height: 3.5rem;
-    width: 5rem;
-    margin-left: 1rem !important;
-}
-
-.righSide{
-    width: 50%;
-}
-
-.img{
-    height: 500px;
-    width: 550px;
-    margin-top: 2rem;
-}
-
-.logoutbtn{
-    text-transform:capitalize !important;
-}
-
-@media (max-width: 851px){
-
-.bodyMainContainer{
-    display: flex;
-    flex-direction: column;
-}
-
-.leftSide{
-   width: 100vw;    
-}
-
-.leftContent{
-    position: relative;
-    top: -2rem;
-    text-align: center;
-    padding: 1rem;
-}
-
-.joinbtn{
-    height: 2.5rem;
-    width: 10rem;
-    margin-top: 1rem !important;
-}
-
-.righSide{
-    width: 100vw;
-    order: -1;
-    display: flex;
-    justify-content: center;
-}
-
-.img{
-    height: 300px;
-    width: auto;
-}
-
-
-/* hamburger */
-.hamburger {
-    display: block;
+/* ── Nav Right ───────────────────────────────────── */
+.navRightContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .navRight {
-    display: none; 
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.history {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.history:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Logout button — override MUI */
+.logoutbtn {
+  text-transform: capitalize !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--text-secondary) !important;
+  border-radius: 9999px !important;
+  padding: 0.4rem 1.1rem !important;
+  min-width: auto !important;
+  transition: color 0.2s ease, background 0.2s ease !important;
+  background: transparent !important;
+  border: 1px solid var(--border-default) !important;
+}
+
+.logoutbtn:hover {
+  color: var(--danger) !important;
+  border-color: var(--danger) !important;
+  background: rgba(239, 68, 68, 0.06) !important;
+}
+
+/* ── Hamburger ───────────────────────────────────── */
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-primary);
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  user-select: none;
+}
+.hamburger:hover { background: rgba(255, 255, 255, 0.06); }
+
+/* ── Body ────────────────────────────────────────── */
+.bodyMainContainer {
+  display: flex;
+  align-items: center;
+  min-height: calc(100dvh - 64px);
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background radial accents */
+.bodyMainContainer::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: -80px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 70, 229, 0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Left Panel ──────────────────────────────────── */
+.leftSide {
+  width: 50%;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.leftContent {
+  position: static;
+  top: auto;
+  padding-left: 0;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  max-width: 420px;
+  width: 100%;
+  animation: fadeInCard 0.6s ease both;
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.joinText {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+/* ── Input ───────────────────────────────────────── */
+.input {
+  width: 100% !important;
+}
+
+/* MUI TextField overrides */
+.input .MuiOutlinedInput-root {
+  background: var(--bg-surface) !important;
+  border-radius: var(--radius-md) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.input .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-default) !important;
+}
+
+.input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--border-accent) !important;
+}
+
+.input .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: var(--accent-blue) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2) !important;
+}
+
+.input .MuiInputLabel-root {
+  color: var(--text-secondary) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.input .MuiInputLabel-root.Mui-focused {
+  color: var(--accent-blue) !important;
+}
+
+/* ── Join Button ─────────────────────────────────── */
+.joinbtn {
+  height: auto !important;
+  width: auto !important;
+  margin-left: 0 !important;
+  margin-top: 1rem !important;
+  padding: 0.75rem 2rem !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  border-radius: 9999px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 0 20px rgba(79, 70, 229, 0.35) !important;
+  transition: box-shadow 0.2s ease, transform 0.2s ease !important;
+  border: none !important;
+}
+
+.joinbtn:hover {
+  box-shadow: 0 0 36px rgba(79, 70, 229, 0.55) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* ── Right Panel (Image) ─────────────────────────── */
+.righSide {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.img {
+  height: auto;
+  width: clamp(280px, 40vw, 500px);
+  max-height: 480px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 48px rgba(79, 70, 229, 0.25));
+  border-radius: var(--radius-xl);
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 851px) {
+  .bodyMainContainer {
     flex-direction: column;
+    padding: 2rem 1.2rem;
+    gap: 2rem;
+    min-height: auto;
+  }
+
+  .leftSide {
+    width: 100%;
+    padding: 0;
+  }
+
+  .leftContent {
+    text-align: center;
+    max-width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
+  .joinText {
+    font-size: 1.5rem;
+  }
+
+  .joinbtn {
+    width: 100% !important;
+    margin-top: 1rem !important;
+    margin-left: 0 !important;
+  }
+
+  .righSide {
+    width: 100%;
+    order: -1;
+  }
+
+  .img {
+    width: clamp(200px, 70vw, 340px);
+    max-height: 260px;
+  }
+
+  /* Hamburger responsive */
+  .hamburger {
+    display: block;
+  }
+
+  .navRight {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
     position: absolute;
-    top: 60px;
+    top: 68px;
     right: 1rem;
-    background:gray;
-    padding: 0.5rem;
-    border-radius: 8px;
-    z-index: 100;
+    background: rgba(18, 18, 30, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-lg);
+    padding: 0.75rem;
+    gap: 0.25rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 200;
+    min-width: 160px;
   }
 
   .navRight.active {
-    display: flex; 
+    display: flex;
   }
 
   .history {
-    color: white;
-    margin: 0.5rem 0;
-    font-size: 1rem;
-  }
-  
-
-  .logoutbtn{
-    text-transform:capitalize !important;
-    color: white !important;
-    font-size: 1rem !important;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    color: var(--text-secondary);
   }
 
+  .logoutbtn {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    border: none !important;
+    border-radius: 8px !important;
+    color: var(--danger) !important;
+  }
 }
 
+@media (max-width: 480px) {
+  .nav {
+    padding: 0 1rem;
+  }
+
+  .leftContent {
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1rem;
+  }
+
+  .joinText {
+    font-size: 1.3rem;
+  }
+}

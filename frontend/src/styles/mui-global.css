@@ -1,0 +1,131 @@
+/* ================================================
+   MUI Global Dark Overrides — mui-global.css
+   (imported via App.css)
+   ================================================ */
+
+/* ── Dialog (Refresh Prevention Popup) ───────────── */
+.MuiDialog-paper {
+  background: rgba(20, 20, 34, 0.97) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.MuiDialogTitle-root {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.01em !important;
+  color: var(--text-primary) !important;
+  padding: 1.5rem 1.75rem 0.5rem !important;
+}
+
+.MuiDialogContent-root {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text-secondary) !important;
+  font-size: 0.9rem !important;
+  line-height: 1.6 !important;
+  padding: 0.75rem 1.75rem 1rem !important;
+}
+
+.MuiDialogActions-root {
+  padding: 0.75rem 1.5rem 1.25rem !important;
+  gap: 0.5rem !important;
+}
+
+/* "Stay in Meeting" button */
+.MuiDialogActions-root .MuiButtonBase-root:first-child {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 0.875rem !important;
+  text-transform: none !important;
+  color: var(--text-secondary) !important;
+  border-radius: 8px !important;
+  padding: 0.45rem 1rem !important;
+  transition: color 0.2s ease, background 0.2s ease !important;
+}
+
+.MuiDialogActions-root .MuiButtonBase-root:first-child:hover {
+  color: var(--text-primary) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* "Leave Meeting" button */
+.MuiDialogActions-root .MuiButtonBase-root:last-child {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  text-transform: none !important;
+  color: #fff !important;
+  background: #ef4444 !important;
+  border-radius: 8px !important;
+  padding: 0.45rem 1.1rem !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+.MuiDialogActions-root .MuiButtonBase-root:last-child:hover {
+  background: #dc2626 !important;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.45) !important;
+}
+
+/* ── Snackbar ─────────────────────────────────────── */
+.MuiSnackbar-root {
+  font-family: 'Inter', sans-serif !important;
+}
+
+.MuiAlert-root {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  border-radius: 12px !important;
+  backdrop-filter: blur(16px) !important;
+}
+
+.MuiAlert-filledError {
+  background: rgba(239, 68, 68, 0.92) !important;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3) !important;
+}
+
+.MuiAlert-filledSuccess {
+  background: rgba(16, 185, 129, 0.92) !important;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.25) !important;
+}
+
+.MuiAlert-filledInfo {
+  background: rgba(79, 70, 229, 0.92) !important;
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3) !important;
+}
+
+.MuiAlert-filledWarning {
+  background: rgba(245, 158, 11, 0.92) !important;
+}
+
+/* ── Badge (unread message count) ────────────────── */
+.MuiBadge-badge {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  color: #fff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.7rem !important;
+  font-weight: 700 !important;
+  border: 2px solid #08080f !important;
+  box-shadow: 0 0 8px rgba(79, 70, 229, 0.4) !important;
+}
+
+/* ── CssBaseline Override ────────────────────────── */
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* ── MUI IconButton ──────────────────────────────── */
+.MuiIconButton-root {
+  transition: transform 0.15s ease, background 0.2s ease !important;
+}
+
+.MuiIconButton-root:hover {
+  transform: scale(1.08) !important;
+}

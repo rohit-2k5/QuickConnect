@@ -1,0 +1,103 @@
+/* ================================================
+   History Page — history.css
+   (imported via App.css)
+   ================================================ */
+
+/* ── Page Shell ──────────────────────────────────── */
+/* The history component renders a plain <div> at root —
+   we target it via the MUI children it contains */
+
+/* Background: since no wrapper class, we pin styles to body
+   when on this page via MUI child context */
+.MuiGrid-root ~ * {
+  background: var(--bg-primary);
+}
+
+/* Page body defaults */
+body {
+  background: var(--bg-primary);
+}
+
+/* ── Home Button (top-left) ──────────────────────── */
+/* First IconButton on the history page */
+body > div#root > div.App > div > div > div > .MuiButtonBase-root.MuiIconButton-root:first-child {
+  color: var(--text-secondary) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  margin: 1.5rem 0 1rem 1.5rem !important;
+  padding: 0.5rem !important;
+  transition: color 0.2s ease, background 0.2s ease !important;
+}
+
+body > div#root > div.App > div > div > div > .MuiButtonBase-root.MuiIconButton-root:first-child:hover {
+  color: var(--text-primary) !important;
+  background: rgba(79, 70, 229, 0.1) !important;
+  border-color: rgba(79, 70, 229, 0.3) !important;
+}
+
+/* ── MUI Cards ───────────────────────────────────── */
+.MuiCard-root {
+  background: rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35) !important;
+  margin: 0.75rem 1.5rem !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  overflow: hidden !important;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-4px) !important;
+  border-color: rgba(79, 70, 229, 0.35) !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(79, 70, 229, 0.12) !important;
+}
+
+/* Card content */
+.MuiCardContent-root {
+  padding: 1.25rem 1.5rem !important;
+}
+
+/* ── Typography inside cards ─────────────────────── */
+.MuiTypography-root {
+  font-family: 'Inter', sans-serif !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Meeting code — larger & accent color */
+.MuiTypography-root:first-child {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: #818cf8 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+/* Date — secondary */
+.MuiTypography-body1,
+.MuiTypography-root[class*='body'] {
+  font-size: 0.95rem !important;
+  color: var(--text-secondary) !important;
+  font-weight: 400 !important;
+}
+
+/* ── Card Actions ────────────────────────────────── */
+.MuiCardActions-root {
+  padding: 0.5rem 1.5rem 1rem !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.MuiCardActions-root .MuiButtonBase-root {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  text-transform: none !important;
+  border-radius: 8px !important;
+  color: var(--accent-blue) !important;
+}
+
+/* ── Empty State ─────────────────────────────────── */
+/* Rendered as <></> which means nothing visible —
+   the styling will just show the dark bg gracefully */

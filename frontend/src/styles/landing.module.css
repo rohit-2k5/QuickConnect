@@ -1,58 +1,105 @@
+/* ================================================
+   Landing Page Module — landing.module.css
+   ================================================ */
 
-
-.logoContainer{
+/* ── Logo ─────────────────────────────────────── */
+.logoContainer {
   display: flex;
   align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
 }
 
-.logocss{
-  height: 25px;
+.logocss {
+  height: 28px;
   width: auto;
+  filter: drop-shadow(0 0 8px rgba(79, 70, 229, 0.6));
 }
 
-.para{
-    color: gray;
-    margin-top: 4rem;
-    font-size: 1.5rem;
+/* ── Paragraph (sub-headline) ─────────────────── */
+.para {
+  color: var(--text-secondary);
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  max-width: 440px;
 }
 
-.getstarted{
-    text-align: center;
-    font-size: small ;
-    height: 4.2rem !important;
-    width: 15rem !important;
-    
+/* ── CTA Button ───────────────────────────────── */
+.getstarted {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: auto !important;
+  width: auto !important;
+  margin-top: 2rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  box-shadow: 0 0 24px rgba(79, 70, 229, 0.4);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
 }
 
-.getstarted:hover{
-    opacity: 0.9;
+.getstarted:hover {
+  opacity: 1;
+  box-shadow: 0 0 40px rgba(79, 70, 229, 0.65);
+  transform: translateY(-2px);
 }
 
+/* Override React Router Link / <a> defaults inside the button */
+.getstarted a,
+.getstarted a:visited,
+.getstarted a:hover,
+.getstarted a:active {
+  display: block;
+  padding: 0.85rem 2.2rem;
+  background: transparent !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-decoration: none !important;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: 9999px;
+}
+
+/* ── Typewriter ───────────────────────────────── */
 .typewriterText {
-  font-family: sans-serif;
-  font-weight: bolder;
-  font-size: 4rem;
-  color: white;
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  min-height: 1.2em;
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 900px) {
+  .para {
+    max-width: 100%;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .getstarted {
+    margin-inline: auto;
+  }
 }
 
 @media (max-width: 768px) {
-  .landingMainContainer {
-    display: flex;
-    flex-direction: column;   /* stack instead of row */
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    gap: 1.5rem;
-    padding: 1rem;
-  }
-
   .typewriterText {
-    font-size: 2.3rem;
-    display: block;
-    margin-top: 0.5rem;
+    font-size: 2.2rem;
   }
+}
 
-  .getstarted{
-     margin-left: 4rem !important;
+@media (max-width: 400px) {
+  .typewriterText {
+    font-size: 1.8rem;
   }
 }
