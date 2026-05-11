@@ -631,25 +631,9 @@ export default function VideoMeetComponent() {
 
                                     console.log(messages)
                                     return (
-                                        <div style={{ 
-                                            marginBottom: "12px", 
-                                            padding: "8px 12px",
-                                            backgroundColor: "#f0f0f0",
-                                            borderRadius: "8px",
-                                            maxWidth: "85%"
-                                        }} key={index}>
-                                            <p style={{ 
-                                                fontWeight: "bold", 
-                                                color: "#075e54",
-                                                margin: "0 0 4px 0",
-                                                fontSize: "14px"
-                                            }}>{item.sender}</p>
-                                            <p style={{ 
-                                                margin: "0",
-                                                color: "#333",
-                                                fontSize: "14px",
-                                                lineHeight: "1.4"
-                                            }}>{item.data}</p>
+                                        <div className={styles.messageWrapper} key={index}>
+                                            <p className={styles.messageSender}>{item.sender}</p>
+                                            <p className={styles.messageContent}>{item.data}</p>
                                         </div>
                                     )
                                 }) : <p>No Messages Yet</p>}

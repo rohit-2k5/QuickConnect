@@ -309,28 +309,36 @@
   font-size: 0.875rem;
 }
 
-/* Message bubble overrides (inline styles in JSX are hard to override,
-   but we can style the wrapper divs that have class-based parents) */
-.chattingDisplay > div {
+/* Message bubble overrides */
+.messageWrapper {
   background: rgba(255, 255, 255, 0.06) !important;
   border: 1px solid rgba(255, 255, 255, 0.06) !important;
   border-radius: 12px !important;
-  max-width: 90% !important;
-  padding: 10px 14px !important;
+  max-width: 85% !important;
+  width: fit-content !important;
+  padding: 8px 12px !important;
+  margin-bottom: 8px !important;
+  align-self: flex-start !important;
+  text-align: left !important;
 }
 
-.chattingDisplay > div p:first-child {
+.messageSender {
   color: #818cf8 !important;
   font-size: 0.78rem !important;
   font-weight: 600 !important;
-  margin-bottom: 2px !important;
+  margin-bottom: 4px !important;
+  margin-top: 0 !important;
   text-transform: capitalize;
+  text-align: left !important;
 }
 
-.chattingDisplay > div p:last-child {
+.messageContent {
   color: var(--text-primary) !important;
   font-size: 0.9rem !important;
   line-height: 1.5 !important;
+  margin: 0 !important;
+  text-align: left !important;
+  word-wrap: break-word !important;
 }
 
 /* ── Chat Input Area ──────────────────────────────── */

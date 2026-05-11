@@ -158,7 +158,7 @@ export default function Authentication() {
                             </Button>
 
                            <div style={{display: "flex"}}>
-                            <HomeIcon style={{ cursor: "pointer" }} onClick={() => navigate('/')}></HomeIcon>
+                            <HomeIcon style={{ cursor: "pointer" }} ></HomeIcon>
                             <p style={{marginLeft:"0.1rem", marginTop:"0.1rem"}}>Home</p>
                            </div>
 
