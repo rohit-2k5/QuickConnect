@@ -2,9 +2,23 @@ const fs = require('fs');
 const p = 'VideoMeet.jsx';
 let c = fs.readFileSync(p, 'utf8');
 
-c = c.replace(/style=\{\{\s*marginBottom:\s*"12px",\s*padding:\s*"8px 12px",\s*backgroundColor:\s*"#f0f0f0",\s*borderRadius:\s*"8px",\s*maxWidth:\s*"85%"\s*\}\}/g, 'className={styles.messageWrapper}');
-c = c.replace(/style=\{\{\s*fontWeight:\s*"bold",\s*color:\s*"#075e54",\s*margin:\s*"0 0 4px 0",\s*fontSize:\s*"14px"\s*\}\}/g, 'className={styles.messageSender}');
-c = c.replace(/style=\{\{\s*margin:\s*"0",\s*color:\s*"#333",\s*fontSize:\s*"14px",\s*lineHeight:\s*"1\.4"\s*\}\}/g, 'className={styles.messageContent}');
+// Fix 1: Guard srcObject assignment so it doesn't flicker on every render
+c = c.replace(
+  /ref=\{ref => \{\r?\n\s*if \(ref && video\.stream\) \{\r?\n\s*ref\.srcObject = video\.stream;\r?\n\s*\}\r?\n\s*\}\}/,
+  `ref={ref => {\r\n                                    if (ref && video.stream && ref.srcObject !== video.stream) {\r\n                                        ref.srcObject = video.stream;\r\n                                    }\r\n                                }}`
+);
+
+// Fix 2: user-left now receives (id, leftUsername) - update the handler to show a toast
+c = c.replace(
+  /socketRef\.current\.on\('user-left', \(id\) => \{\r?\n\s*setVideos\(\(videos\) => videos\.filter\(\(video\) => video\.socketId !== id\)\)\r?\n\s*\}\)/,
+  `socketRef.current.on('user-left', (id, leftUsername) => {\r\n                setVideos((videos) => videos.filter((video) => video.socketId !== id));\r\n                setOpen({ open: true, severity: 'info', message: \`\${leftUsername || 'A participant'} left the call\` });\r\n            })`
+);
+
+// Fix 3: Remove the hardcoded white backgroundColor from the chat header inline style
+c = c.replace(
+  /style=\{\{display: "flex", alignItems: "center", position: "sticky", top: "0rem", backgroundColor: "white", marginLeft: "1rem", marginBottom: "1rem"\}\}/,
+  `className={styles.chatHeader}`
+);
 
 fs.writeFileSync(p, c, 'utf8');
 console.log('Done');

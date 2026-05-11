@@ -397,8 +397,9 @@ export default function VideoMeetComponent() {
 
             socketRef.current.on('chat-message', addMessage)
 
-            socketRef.current.on('user-left', (id) => {
-                setVideos((videos) => videos.filter((video) => video.socketId !== id))
+            socketRef.current.on('user-left', (id, leftUsername) => {
+                setVideos((videos) => videos.filter((video) => video.socketId !== id));
+                setOpen({ open: true, severity: 'info', message: `${leftUsername || 'A participant'} left the call` });
             })
 
             socketRef.current.on('user-joined', (id, clients) => {
@@ -623,7 +624,7 @@ export default function VideoMeetComponent() {
                     {showModal ? <div className={styles.chatRoom}>
 
                         <div className={styles.chatContainer}>
-                            <div style={{display: "flex", alignItems: "center", position: "sticky", top: "0rem", backgroundColor: "white", marginLeft: "1rem", marginBottom: "1rem"}}><ArrowBackIcon onClick={handleclosechat} sx={{height: "4rem", width: "2rem", marginRight: "1rem"}}/>Chats</div>
+                            <div className={styles.chatHeader}><ArrowBackIcon onClick={handleclosechat} sx={{height: "4rem", width: "2rem", marginRight: "1rem"}}/>Chats</div>
 
                             <div className={styles.chattingDisplay} ref={chatDisplayRef}>
 
@@ -701,10 +702,10 @@ export default function VideoMeetComponent() {
 
                                     data-socket={video.socketId}
                                     ref={ref => {
-                                        if (ref && video.stream) {
-                                            ref.srcObject = video.stream;
-                                        }
-                                    }}
+                                    if (ref && video.stream && ref.srcObject !== video.stream) {
+                                        ref.srcObject = video.stream;
+                                    }
+                                }}
                                     autoPlay
                                 >
                                 </video>

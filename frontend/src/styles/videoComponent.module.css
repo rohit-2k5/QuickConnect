@@ -230,17 +230,15 @@
   top: 0;
   right: 0;
   height: 100vh;
-  background: rgba(14, 14, 24, 0.96);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  background: #0f0f1a;
   border-left: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 20px 0 0 20px;
-  width: 320px;
+  width: 340px;
   display: flex;
   flex-direction: column;
   z-index: 25;
   overflow: hidden;
-  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.5);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.6);
   animation: slideInRight 0.22s ease;
 }
 
@@ -255,90 +253,104 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
 }
 
-/* Chat header row (ArrowBack + "Chats" text) */
-.chatContainer > div:first-child {
+/* Dark header row (replaces the white inline style) */
+.chatHeader {
   display: flex !important;
   align-items: center !important;
   gap: 0.5rem !important;
-  padding: 1.2rem 1rem !important;
-  background: rgba(18, 18, 30, 0.95) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  padding: 1rem 1.25rem !important;
+  background: #0f0f1a !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   position: sticky !important;
   top: 0 !important;
+  font-family: 'Inter', sans-serif !important;
   font-weight: 600 !important;
   font-size: 1rem !important;
-  color: var(--text-primary) !important;
-  margin-left: 0 !important;
-  margin-bottom: 0 !important;
+  color: #f0f0ff !important;
   letter-spacing: -0.01em !important;
+  z-index: 2 !important;
+  flex-shrink: 0 !important;
 }
 
-/* ArrowBack icon */
-.chatContainer > div:first-child svg {
-  color: var(--text-secondary) !important;
+/* ArrowBack icon inside chatHeader */
+.chatHeader svg {
+  color: #8b8ba7 !important;
   cursor: pointer !important;
   transition: color 0.2s ease !important;
-  height: 2rem !important;
+  height: 1.5rem !important;
   width: 1.5rem !important;
-  margin-right: 0.25rem !important;
 }
 
-.chatContainer > div:first-child svg:hover {
-  color: var(--text-primary) !important;
+.chatHeader svg:hover {
+  color: #f0f0ff !important;
 }
 
 /* ── Messages area ────────────────────────────────── */
 .chattingDisplay {
   flex: 1;
   overflow-y: auto;
-  padding: 1rem;
+  padding: 12px 12px 8px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-height: calc(100vh - 130px);
+  gap: 4px;
   min-height: 0;
+  background: #0f0f1a;
 }
 
-.chattingDisplay p {
-  word-wrap: break-word;
-  color: var(--text-secondary);
+/* Scrollbar */
+.chattingDisplay::-webkit-scrollbar { width: 4px; }
+.chattingDisplay::-webkit-scrollbar-track { background: transparent; }
+.chattingDisplay::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+/* "No Messages Yet" */
+.chattingDisplay > p {
+  color: #8b8ba7;
   text-align: center;
   padding: 2rem 0;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
+  font-family: 'Inter', sans-serif;
 }
 
-/* Message bubble overrides */
+/* ── WhatsApp/Instagram-style message bubble ──────── */
 .messageWrapper {
-  background: rgba(255, 255, 255, 0.06) !important;
-  border: 1px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 12px !important;
-  max-width: 85% !important;
-  width: fit-content !important;
-  padding: 8px 12px !important;
-  margin-bottom: 8px !important;
-  align-self: flex-start !important;
-  text-align: left !important;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  max-width: 82%;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 4px 16px 16px 16px;
+  padding: 6px 12px 8px;
+  margin-bottom: 2px;
+}
+
+/* Slightly different shape for consecutive messages (optional) */
+.messageWrapper + .messageWrapper {
+  border-radius: 4px 16px 16px 16px;
 }
 
 .messageSender {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
   color: #818cf8 !important;
-  font-size: 0.78rem !important;
-  font-weight: 600 !important;
-  margin-bottom: 4px !important;
-  margin-top: 0 !important;
+  margin: 0 0 3px 0 !important;
   text-transform: capitalize;
-  text-align: left !important;
+  line-height: 1.2 !important;
 }
 
 .messageContent {
-  color: var(--text-primary) !important;
-  font-size: 0.9rem !important;
-  line-height: 1.5 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.88rem !important;
+  color: #e2e2f0 !important;
   margin: 0 !important;
-  text-align: left !important;
-  word-wrap: break-word !important;
+  line-height: 1.45 !important;
+  word-break: break-word !important;
+  white-space: pre-wrap !important;
 }
 
 /* ── Chat Input Area ──────────────────────────────── */
@@ -346,46 +358,56 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0.75rem 1rem 1.25rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(14, 14, 24, 0.98);
-  position: sticky;
-  bottom: 0;
-  margin-top: auto;
+  padding: 10px 12px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0f0f1a;
+  flex-shrink: 0;
 }
 
-.chattingArea input {
-  flex: 1;
-  padding: 10px 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+/* Override MUI TextField inside chat */
+.chattingArea .MuiOutlinedInput-root {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 22px !important;
+  color: #f0f0ff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.88rem !important;
 }
 
-.chattingArea input:focus {
-  border-color: rgba(79, 70, 229, 0.5);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+.chattingArea .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.10) !important;
 }
 
-.chattingArea button {
-  padding: 10px 14px;
-  border: none;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, transform 0.15s ease;
-  box-shadow: 0 0 12px rgba(79, 70, 229, 0.35);
+.chattingArea .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(79, 70, 229, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12) !important;
 }
 
-.chattingArea button:hover {
-  box-shadow: 0 0 20px rgba(79, 70, 229, 0.55);
-  transform: scale(1.05);
+.chattingArea .MuiInputBase-input {
+  padding: 10px 16px !important;
+  color: #f0f0ff !important;
+}
+
+.chattingArea .MuiInputBase-input::placeholder {
+  color: #6b6b8a !important;
+  opacity: 1 !important;
+}
+
+/* Send button */
+.chattingArea .MuiButtonBase-root {
+  min-width: 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+  box-shadow: 0 0 14px rgba(79, 70, 229, 0.4) !important;
+  transition: box-shadow 0.2s ease, transform 0.15s ease !important;
+  flex-shrink: 0 !important;
+}
+
+.chattingArea .MuiButtonBase-root:hover {
+  box-shadow: 0 0 22px rgba(79, 70, 229, 0.6) !important;
+  transform: scale(1.07) !important;
 }
 
 /* ── Permission / Lobby Screen ───────────────────── */

@@ -4,6 +4,7 @@ import { Server } from "socket.io"
 let connections = {}
 let messages = {}
 let timeOnline = {}
+let usernames = {}
 
 export const connectToSocket = (server) => {
     const io = new Server(server, {
@@ -67,6 +68,7 @@ export const connectToSocket = (server) => {
                 }
 
                 messages[matchingRoom].push({ 'sender': sender, "data": data, "socket-id-sender": socket.id })
+                usernames[socket.id] = sender;
                 console.log("message", matchingRoom, ":", sender, data)
 
                 connections[matchingRoom].forEach((elem) => {
@@ -89,7 +91,7 @@ export const connectToSocket = (server) => {
                         key = k
 
                         for (let a = 0; a < connections[key].length; ++a) {
-                            io.to(connections[key][a]).emit('user-left', socket.id)
+                            io.to(connections[key][a]).emit('user-left', socket.id, usernames[socket.id] || 'A participant')
                         }
 
                         var index = connections[key].indexOf(socket.id)
