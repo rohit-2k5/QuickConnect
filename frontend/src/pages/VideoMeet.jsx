@@ -509,31 +509,44 @@ export default function VideoMeetComponent() {
 
     let flipCamera = async () => {
         const newFacingMode = facingMode === 'user' ? 'environment' : 'user';
-        setFacingMode(newFacingMode);
         try {
-            // Stop current video tracks
+            // Stop ONLY video tracks — do NOT touch audio (mic is already in use on mobile)
             if (window.localStream) {
                 window.localStream.getVideoTracks().forEach(track => track.stop());
             }
-            // Request new stream with switched camera
-            const newStream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: newFacingMode },
-                audio: audio
+
+            // Request only a new video track with the switched camera
+            // { ideal } = soft constraint — won't throw if the exact camera isn't available
+            const newVideoStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: { ideal: newFacingMode } },
+                audio: false
             });
-            const newVideoTrack = newStream.getVideoTracks()[0];
+
+            const newVideoTrack = newVideoStream.getVideoTracks()[0];
+
+            // Preserve existing audio tracks from the current stream
+            const audioTracks = window.localStream ? window.localStream.getAudioTracks() : [];
+
+            // Build a combined stream: new video + old audio
+            const combinedStream = new MediaStream([newVideoTrack, ...audioTracks]);
+
             // Update local preview
             if (localVideoref.current) {
-                localVideoref.current.srcObject = newStream;
+                localVideoref.current.srcObject = combinedStream;
             }
-            window.localStream = newStream;
-            // Replace track in all active peer connections (no renegotiation needed)
+            window.localStream = combinedStream;
+
+            // Swap track in all active peer connections without renegotiation
             for (let id in connections) {
                 const sender = connections[id].getSenders().find(s => s.track && s.track.kind === 'video');
                 if (sender) sender.replaceTrack(newVideoTrack);
             }
+
+            // Only update state after success
+            setFacingMode(newFacingMode);
         } catch (e) {
             console.log('Camera flip error:', e);
-            setOpen({ open: true, severity: 'error', message: 'Could not switch camera' });
+            setOpen({ open: true, severity: 'error', message: 'Camera switch failed: ' + (e.message || e.name) });
         }
     }
 
