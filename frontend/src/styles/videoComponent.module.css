@@ -127,6 +127,16 @@
   box-shadow: 0 0 16px rgba(79, 70, 229, 0.25) !important;
 }
 
+/* ── Flip Camera button ───────────────────────────── */
+.buttonContainers .MuiIconButton-root:nth-child(6) {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #22d3ee !important;
+}
+.buttonContainers .MuiIconButton-root:nth-child(6):hover {
+  background: rgba(6, 182, 212, 0.15) !important;
+  box-shadow: 0 0 16px rgba(6, 182, 212, 0.3) !important;
+}
+
 /* ── Conference Video Grid ───────────────────────── */
 .conferenceView {
   display: grid;

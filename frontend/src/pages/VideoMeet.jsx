@@ -14,6 +14,7 @@ import ChatIcon from '@mui/icons-material/Chat'
 import server from '../environment';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
 
 const server_url = server;
 
@@ -66,6 +67,7 @@ export default function VideoMeetComponent() {
     let [askForUsername, setAskForUsername] = useState(true);
 
     let [username, setUsername] = useState("");
+    let [facingMode, setFacingMode] = useState('user');
 
     const videoRef = useRef([])
     const chatDisplayRef = useRef(null)
@@ -505,6 +507,36 @@ export default function VideoMeetComponent() {
         // getUserMedia();
     }
 
+    let flipCamera = async () => {
+        const newFacingMode = facingMode === 'user' ? 'environment' : 'user';
+        setFacingMode(newFacingMode);
+        try {
+            // Stop current video tracks
+            if (window.localStream) {
+                window.localStream.getVideoTracks().forEach(track => track.stop());
+            }
+            // Request new stream with switched camera
+            const newStream = await navigator.mediaDevices.getUserMedia({
+                video: { facingMode: newFacingMode },
+                audio: audio
+            });
+            const newVideoTrack = newStream.getVideoTracks()[0];
+            // Update local preview
+            if (localVideoref.current) {
+                localVideoref.current.srcObject = newStream;
+            }
+            window.localStream = newStream;
+            // Replace track in all active peer connections (no renegotiation needed)
+            for (let id in connections) {
+                const sender = connections[id].getSenders().find(s => s.track && s.track.kind === 'video');
+                if (sender) sender.replaceTrack(newVideoTrack);
+            }
+        } catch (e) {
+            console.log('Camera flip error:', e);
+            setOpen({ open: true, severity: 'error', message: 'Could not switch camera' });
+        }
+    }
+
     useEffect(() => {
         if (screen !== undefined) {
             getDislayMedia();
@@ -688,6 +720,10 @@ export default function VideoMeetComponent() {
                         
                         <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>
                                 <ChatIcon />                        
+                        </IconButton>
+
+                        <IconButton onClick={flipCamera} title="Flip Camera">
+                            <CameraswitchIcon />
                         </IconButton>
                         
 

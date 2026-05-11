@@ -2,23 +2,35 @@ const fs = require('fs');
 const p = 'VideoMeet.jsx';
 let c = fs.readFileSync(p, 'utf8');
 
-// Fix 1: Guard srcObject assignment so it doesn't flicker on every render
+// 1. Add CameraswitchIcon import after ArrowBackIcon
 c = c.replace(
-  /ref=\{ref => \{\r?\n\s*if \(ref && video\.stream\) \{\r?\n\s*ref\.srcObject = video\.stream;\r?\n\s*\}\r?\n\s*\}\}/,
-  `ref={ref => {\r\n                                    if (ref && video.stream && ref.srcObject !== video.stream) {\r\n                                        ref.srcObject = video.stream;\r\n                                    }\r\n                                }}`
+  `import ArrowBackIcon from '@mui/icons-material/ArrowBack';`,
+  `import ArrowBackIcon from '@mui/icons-material/ArrowBack';\r\nimport CameraswitchIcon from '@mui/icons-material/Cameraswitch';`
 );
 
-// Fix 2: user-left now receives (id, leftUsername) - update the handler to show a toast
+// 2. Add facingMode state after the username state
 c = c.replace(
-  /socketRef\.current\.on\('user-left', \(id\) => \{\r?\n\s*setVideos\(\(videos\) => videos\.filter\(\(video\) => video\.socketId !== id\)\)\r?\n\s*\}\)/,
-  `socketRef.current.on('user-left', (id, leftUsername) => {\r\n                setVideos((videos) => videos.filter((video) => video.socketId !== id));\r\n                setOpen({ open: true, severity: 'info', message: \`\${leftUsername || 'A participant'} left the call\` });\r\n            })`
+  `    let [username, setUsername] = useState("");\r\n`,
+  `    let [username, setUsername] = useState("");\r\n    let [facingMode, setFacingMode] = useState('user');\r\n`
 );
 
-// Fix 3: Remove the hardcoded white backgroundColor from the chat header inline style
+// 3. Add flipCamera function after handleAudio
 c = c.replace(
-  /style=\{\{display: "flex", alignItems: "center", position: "sticky", top: "0rem", backgroundColor: "white", marginLeft: "1rem", marginBottom: "1rem"\}\}/,
-  `className={styles.chatHeader}`
+  `    let handleAudio = () => {\r\n        setAudio(!audio)\r\n        // getUserMedia();\r\n    }`,
+  `    let handleAudio = () => {\r\n        setAudio(!audio)\r\n        // getUserMedia();\r\n    }\r\n\r\n    let flipCamera = async () => {\r\n        const newFacingMode = facingMode === 'user' ? 'environment' : 'user';\r\n        setFacingMode(newFacingMode);\r\n        try {\r\n            // Stop current video tracks\r\n            if (window.localStream) {\r\n                window.localStream.getVideoTracks().forEach(track => track.stop());\r\n            }\r\n            // Request new stream with switched camera\r\n            const newStream = await navigator.mediaDevices.getUserMedia({\r\n                video: { facingMode: newFacingMode },\r\n                audio: audio\r\n            });\r\n            const newVideoTrack = newStream.getVideoTracks()[0];\r\n            // Update local preview\r\n            if (localVideoref.current) {\r\n                localVideoref.current.srcObject = newStream;\r\n            }\r\n            window.localStream = newStream;\r\n            // Replace track in all active peer connections (no renegotiation needed)\r\n            for (let id in connections) {\r\n                const sender = connections[id].getSenders().find(s => s.track && s.track.kind === 'video');\r\n                if (sender) sender.replaceTrack(newVideoTrack);\r\n            }\r\n        } catch (e) {\r\n            console.log('Camera flip error:', e);\r\n            setOpen({ open: true, severity: 'error', message: 'Could not switch camera' });\r\n        }\r\n    }`
+);
+
+// 4. Add flip camera button in control bar after the chat button, before closing </div>
+c = c.replace(
+  `                        <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>\r\n                                <ChatIcon />                        \r\n                        </IconButton>`,
+  `                        <IconButton onClick={() => setModal(!showModal)} style={{ color: "white" }}>\r\n                                <ChatIcon />                        \r\n                        </IconButton>\r\n\r\n                        <IconButton onClick={flipCamera} title="Flip Camera">\r\n                            <CameraswitchIcon />\r\n                        </IconButton>`
 );
 
 fs.writeFileSync(p, c, 'utf8');
-console.log('Done');
+
+// Verify
+const result = fs.readFileSync(p, 'utf8');
+console.log('CameraswitchIcon import:', result.includes('CameraswitchIcon'));
+console.log('facingMode state:', result.includes('facingMode'));
+console.log('flipCamera function:', result.includes('flipCamera'));
+console.log('Flip button in JSX:', result.includes('onClick={flipCamera}'));
